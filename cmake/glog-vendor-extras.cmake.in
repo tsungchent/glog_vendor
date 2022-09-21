@@ -1,0 +1,21 @@
+# Append cmake modules from source directory to the cmake module path
+list(APPEND CMAKE_MODULE_PATH @CMAKE_CURRENT_SOURCE_DIR@/cmake/Modules)
+find_package(Glog QUIET)
+
+if(NOT Glog_FOUND)
+  # add the local Modules directory to the modules path
+  if(WIN32)
+    set(glog_DIR "${@PROJECT_NAME@_DIR}/../../../lib/cmake/glog")
+  endif()
+  message(STATUS "Setting glog_DIR to: '${glog_DIR}'")
+  find_package(glog CONFIG REQUIRED QUIET)
+  set(@PROJECT_NAME@_LIBRARIES ${GLOG_LIBRARIES})
+  set(@PROJECT_NAME@_INCLUDE_DIRS ${GLOG_INCLUDE_DIR})
+else()
+  set(@PROJECT_NAME@_LIBRARIES ${GLOG_LIBRARIES})
+  set(@PROJECT_NAME@_INCLUDE_DIRS ${GLOG_INCLUDE_DIR})
+endif()
+
+
+
+list(APPEND @PROJECT_NAME@_TARGETS glog)
