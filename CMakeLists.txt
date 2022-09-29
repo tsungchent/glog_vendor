@@ -16,7 +16,7 @@ ExternalProject_Add(glog_src
   CONFIGURE_COMMAND cd ../glog_src && 
     cmake .
       -DCMAKE_INSTALL_PREFIX:PATH=${CMAKE_CURRENT_BINARY_DIR}/glog_install
-      -DBUILD_SHARED_LIBS:BOOL=OFF
+      -DBUILD_SHARED_LIBS:BOOL=ON
       -DCMAKE_BUILD_TYPE:STRING=Release
       -DCMAKE_TOOLCHAIN_FILE:STRING=${CMAKE_TOOLCHAIN_FILE}
   BUILD_COMMAND cd ../glog_src && cmake --build . --config Release
@@ -33,6 +33,9 @@ install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/glog_install/include/glog
         FILES_MATCHING PATTERN "*.h")
 install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/glog_install/lib/
         DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
+        FILES_MATCHING PATTERN "*glog*")
+install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/glog_install/bin/
+        DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
         FILES_MATCHING PATTERN "*glog*")
 
 ament_package(CONFIG_EXTRAS "cmake/glog-vendor-extras.cmake.in")
